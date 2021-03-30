@@ -7,11 +7,9 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
-    - name: install mercurial
-      run: brew install hg
     - name: Check out SDL sources
       run: |
-        hg clone https://hg.libsdl.org/SDL /tmp/SDL
+        git clone --depth 1 --branch release-2.0.14 https://github.com/libsdl-org/SDL.git /tmp/SDL
     - name: Build binaries
       run: |
         cd /tmp/SDL
@@ -27,6 +25,8 @@ jobs:
         title: Update macOS SDL binaries
         body: This PR has been auto-generated to update the macOS SDL binaries.
         branch: update-macos-binaries
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
 
   build-linux:
     runs-on: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Check out SDL sources
       run: |
-        hg clone https://hg.libsdl.org/SDL /tmp/SDL
+        git clone --depth 1 --branch release-2.0.14 https://github.com/libsdl-org/SDL.git /tmp/SDL
     - name: Build i386 binaries
       run: |
         mkdir /tmp/i386
@@ -56,4 +56,5 @@ jobs:
         title: Update Linux SDL binaries
         body: This PR has been auto-generated to update the Linux SDL binaries.
         branch: update-linux-binaries
-
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
