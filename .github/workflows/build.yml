@@ -10,6 +10,9 @@ jobs:
     - name: Check out SDL sources
       run: |
         git clone --depth 1 https://github.com/ppy/SDL.git /tmp/SDL
+    - uses: devbotsxyz/xcode-select@v1
+      with:
+        version: "10.3"
     - name: Build binaries
       run: |
         cd /tmp/SDL
