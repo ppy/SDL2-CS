@@ -16,6 +16,8 @@ jobs:
         ./configure
         make
         make install
+      env:
+        MACOSX_DEPLOYMENT_TARGET: '10.14'
     - name: copy built binary
       run: cp /usr/local/lib/libSDL2-2.0.0.dylib native/osx-x64/libSDL2.dylib
     - name: Create pull request
@@ -27,7 +29,6 @@ jobs:
         branch: update-macos-binaries
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-        MACOSX_DEPLOYMENT_TARGET: '10.14'
 
   build-linux:
     runs-on: ubuntu-latest
