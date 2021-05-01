@@ -19,8 +19,8 @@ jobs:
         - { name: win-x64,   os: windows-latest, flags: -A x64                                                                            }
         - { name: win-x86,   os: windows-latest, flags: -A Win32                                                                          }
         - { name: win-arm64, os: windows-latest, flags: -A ARM64                                                                          }
-        - { name: linux-x64, os: ubuntu-20.04,   flags: -GNinja , target_apt_arch: ":amd64"                                               }
-        - { name: linux-x86, os: ubuntu-20.04,   flags: -GNinja, cmake_configure_env: CFLAGS=-m32 CXXFLAGS=-m32, target_apt_arch: ":i386" }
+        - { name: linux-x64, os: ubuntu-18.04,   flags: -GNinja , target_apt_arch: ":amd64"                                               }
+        - { name: linux-x86, os: ubuntu-18.04,   flags: -GNinja, cmake_configure_env: CFLAGS=-m32 CXXFLAGS=-m32, target_apt_arch: ":i386" }
         - { name: osx-x64,   os: macos-latest,   flags: -DCMAKE_OSX_ARCHITECTURES="x86_64" -DCMAKE_OSX_DEPLOYMENT_TARGET="10.14"          }
         # NOTE: macOS 11.0 is the first released supported by Apple Silicon.
         - { name: osx-arm64, os: macos-latest,   flags: -DCMAKE_OSX_ARCHITECTURES="arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET="11.0"            }
@@ -30,6 +30,7 @@ jobs:
       run: |
         # TODO: only run this command on i386
         sudo dpkg --add-architecture i386
+        sudo add-apt-repository ppa:team-xbmc/ppa
         sudo apt-get update -y -qq
         sudo apt-get install wayland-protocols${{ matrix.platform.target_apt_arch }} \
           pkg-config${{ matrix.platform.target_apt_arch }} \
