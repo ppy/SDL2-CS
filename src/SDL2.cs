@@ -48,23 +48,13 @@ namespace SDL2
 		/* Used for stack allocated string marshaling. */
 		internal static int Utf8Size(string str)
 		{
-			Debug.Assert(str != null);
+			if (str == null)
+			{
+				return 0;
+			}
 			return (str.Length * 4) + 1;
 		}
-		internal static int Utf8SizeNullable(string str)
-		{
-			return str != null ? (str.Length * 4) + 1 : 0;
-		}
 		internal static unsafe byte* Utf8Encode(string str, byte* buffer, int bufferSize)
-		{
-			Debug.Assert(str != null);
-			fixed (char* strPtr = str)
-			{
-				Encoding.UTF8.GetBytes(strPtr, str.Length + 1, buffer, bufferSize);
-			}
-			return buffer;
-		}
-		internal static unsafe byte* Utf8EncodeNullable(string str, byte* buffer, int bufferSize)
 		{
 			if (str == null)
 			{
@@ -80,9 +70,13 @@ namespace SDL2
 		/* Used for heap allocated string marshaling.
 		 * Returned byte* must be free'd with FreeHGlobal.
 		 */
-		internal static unsafe byte* Utf8Encode(string str)
+		internal static unsafe byte* Utf8EncodeHeap(string str)
 		{
-			Debug.Assert(str != null);
+			if (str == null)
+			{
+				return (byte*) 0;
+			}
+
 			int bufferSize = Utf8Size(str);
 			byte* buffer = (byte*) Marshal.AllocHGlobal(bufferSize);
 			fixed (char* strPtr = str)
@@ -251,8 +245,8 @@ namespace SDL2
 			string file,
 			string mode
 		) {
-			byte* utf8File = Utf8Encode(file);
-			byte* utf8Mode = Utf8Encode(mode);
+			byte* utf8File = Utf8EncodeHeap(file);
+			byte* utf8Mode = Utf8EncodeHeap(mode);
 			IntPtr rwOps = INTERNAL_SDL_RWFromFile(
 				utf8File,
 				utf8Mode
@@ -386,7 +380,7 @@ namespace SDL2
 		private static extern unsafe IntPtr INTERNAL_SDL_LoadFile(byte* file, out IntPtr datasize);
 		public static unsafe IntPtr SDL_LoadFile(string file, out IntPtr datasize)
 		{
-			byte* utf8File = Utf8Encode(file);
+			byte* utf8File = Utf8EncodeHeap(file);
 			IntPtr result = INTERNAL_SDL_LoadFile(utf8File, out datasize);
 			Marshal.FreeHGlobal((IntPtr) utf8File);
 			return result;
@@ -1234,16 +1228,16 @@ namespace SDL2
 			string message,
 			IntPtr window
 		) {
-			int utf8TitleBufSize = Utf8SizeNullable(title);
+			int utf8TitleBufSize = Utf8Size(title);
 			byte* utf8Title = stackalloc byte[utf8TitleBufSize];
 
-			int utf8MessageBufSize = Utf8SizeNullable(message);
+			int utf8MessageBufSize = Utf8Size(message);
 			byte* utf8Message = stackalloc byte[utf8MessageBufSize];
 
 			return INTERNAL_SDL_ShowSimpleMessageBox(
 				flags,
-				Utf8EncodeNullable(title, utf8Title, utf8TitleBufSize),
-				Utf8EncodeNullable(message, utf8Message, utf8MessageBufSize),
+				Utf8Encode(title, utf8Title, utf8TitleBufSize),
+				Utf8Encode(message, utf8Message, utf8MessageBufSize),
 				window
 			);
 		}
@@ -1497,10 +1491,10 @@ namespace SDL2
 			int h,
 			SDL_WindowFlags flags
 		) {
-			int utf8TitleBufSize = Utf8SizeNullable(title);
+			int utf8TitleBufSize = Utf8Size(title);
 			byte* utf8Title = stackalloc byte[utf8TitleBufSize];
 			return INTERNAL_SDL_CreateWindow(
-				Utf8EncodeNullable(title, utf8Title, utf8TitleBufSize),
+				Utf8Encode(title, utf8Title, utf8TitleBufSize),
 				x, y, w, h,
 				flags
 			);
@@ -1791,7 +1785,7 @@ namespace SDL2
 		private static extern unsafe int INTERNAL_SDL_GL_LoadLibrary(byte* path);
 		public static unsafe int SDL_GL_LoadLibrary(string path)
 		{
-			byte* utf8Path = Utf8Encode(path);
+			byte* utf8Path = Utf8EncodeHeap(path);
 			int result = INTERNAL_SDL_GL_LoadLibrary(
 				utf8Path
 			);
@@ -1822,7 +1816,7 @@ namespace SDL2
 		);
 		public static unsafe SDL_bool SDL_GL_ExtensionSupported(string extension)
 		{
-			int utf8ExtensionBufSize = Utf8SizeNullable(extension);
+			int utf8ExtensionBufSize = Utf8Size(extension);
 			byte* utf8Extension = stackalloc byte[utf8ExtensionBufSize];
 			return INTERNAL_SDL_GL_ExtensionSupported(
 				Utf8Encode(extension, utf8Extension, utf8ExtensionBufSize)
@@ -2166,7 +2160,7 @@ namespace SDL2
 		);
 		public static unsafe int SDL_Vulkan_LoadLibrary(string path)
 		{
-			byte* utf8Path = Utf8Encode(path);
+			byte* utf8Path = Utf8EncodeHeap(path);
 			int result = INTERNAL_SDL_Vulkan_LoadLibrary(
 				utf8Path
 			);
@@ -4392,7 +4386,7 @@ namespace SDL2
 		public static unsafe int SDL_SetClipboardText(
 			string text
 		) {
-			byte* utf8Text = Utf8Encode(text);
+			byte* utf8Text = Utf8EncodeHeap(text);
 			int result = INTERNAL_SDL_SetClipboardText(
 				utf8Text
 			);
@@ -6521,7 +6515,7 @@ namespace SDL2
 		public static unsafe int SDL_GameControllerAddMapping(
 			string mappingString
 		) {
-			byte* utf8MappingString = Utf8Encode(mappingString);
+			byte* utf8MappingString = Utf8EncodeHeap(mappingString);
 			int result = INTERNAL_SDL_GameControllerAddMapping(
 				utf8MappingString
 			);
@@ -7916,7 +7910,7 @@ namespace SDL2
 		public static unsafe SDL_bool SDL_AndroidRequestPermission(
 			string permission
 		) {
-			byte* permissionPtr = Utf8Encode(permission);
+			byte* permissionPtr = Utf8EncodeHeap(permission);
 			SDL_bool result = INTERNAL_SDL_AndroidRequestPermission(
 				permissionPtr
 			);
@@ -8106,16 +8100,16 @@ namespace SDL2
 		);
 		public static unsafe string SDL_GetPrefPath(string org, string app)
 		{
-			int utf8OrgBufSize = Utf8SizeNullable(org);
+			int utf8OrgBufSize = Utf8Size(org);
 			byte* utf8Org = stackalloc byte[utf8OrgBufSize];
 
-			int utf8AppBufSize = Utf8SizeNullable(app);
+			int utf8AppBufSize = Utf8Size(app);
 			byte* utf8App = stackalloc byte[utf8AppBufSize];
 
 			return UTF8_ToManaged(
 				INTERNAL_SDL_GetPrefPath(
-					Utf8EncodeNullable(org, utf8Org, utf8OrgBufSize),
-					Utf8EncodeNullable(app, utf8App, utf8AppBufSize)
+					Utf8Encode(org, utf8Org, utf8OrgBufSize),
+					Utf8Encode(app, utf8App, utf8AppBufSize)
 				),
 				true
 			);
@@ -8239,7 +8233,7 @@ namespace SDL2
 		private static unsafe extern int INTERNAL_SDL_OpenURL(byte* url);
 		public static unsafe int SDL_OpenURL(string url)
 		{
-			byte* urlPtr = Utf8Encode(url);
+			byte* urlPtr = Utf8EncodeHeap(url);
 			int result = INTERNAL_SDL_OpenURL(urlPtr);
 			Marshal.FreeHGlobal((IntPtr) urlPtr);
 			return result;
