@@ -1,6 +1,5 @@
 name: build-native
 on:
-  push:
   workflow_dispatch:
     inputs: {}
 #  schedule:
