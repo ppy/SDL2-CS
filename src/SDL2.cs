@@ -711,6 +711,10 @@ namespace SDL2
 		public const string SDL_HINT_VIDEO_WAYLAND_ALLOW_LIBDECOR =
 			"SDL_VIDEO_WAYLAND_ALLOW_LIBDECOR";
 
+		/* Only available in 2.0.18 or higher. Non-exhaustive list. */
+		public const string SDL_HINT_IME_SHOW_UI =
+			"SDL_IME_SHOW_UI";
+
 		public enum SDL_HintPriority
 		{
 			SDL_HINT_DEFAULT,
