@@ -67,7 +67,7 @@ jobs:
           g++-multilib
     - uses: actions/checkout@v2
       with:
-        repository: ppy/SDL
+        repository: libsdl-org/SDL
     - uses: actions/checkout@v2
       with:
         path: 'SDL2-CS'
