@@ -29,7 +29,6 @@ jobs:
       run: |
         # TODO: only run this command on i386
         sudo dpkg --add-architecture i386
-        sudo add-apt-repository ppa:team-xbmc/ppa
         sudo apt-get update -y -qq
         sudo apt-get install wayland-protocols${{ matrix.platform.target_apt_arch }} \
           pkg-config${{ matrix.platform.target_apt_arch }} \
