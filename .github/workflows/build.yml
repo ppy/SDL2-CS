@@ -27,12 +27,16 @@ jobs:
     - name: Setup Linux dependencies
       if: runner.os == 'Linux'
       run: |
-        # TODO: only run this command on i386
-        sudo dpkg --add-architecture i386
+        [[ ${{ matrix.platform.target_apt_arch }} == :i386 ]] && sudo dpkg --add-architecture i386
         sudo apt-get update -y -qq
-        sudo apt-get install wayland-protocols${{ matrix.platform.target_apt_arch }} \
+        sudo apt-get install -y \
+          gcc-multilib \
+          g++-multilib \
+          cmake \
+          ninja-build \
+          wayland-scanner++ \
+          wayland-protocols \
           pkg-config${{ matrix.platform.target_apt_arch }} \
-          ninja-build${{ matrix.platform.target_apt_arch }} \
           libasound2-dev${{ matrix.platform.target_apt_arch }} \
           libdbus-1-dev${{ matrix.platform.target_apt_arch }} \
           libegl1-mesa-dev${{ matrix.platform.target_apt_arch }} \
@@ -58,12 +62,7 @@ jobs:
           libxxf86vm-dev${{ matrix.platform.target_apt_arch }} \
           libdrm-dev${{ matrix.platform.target_apt_arch }} \
           libgbm-dev${{ matrix.platform.target_apt_arch }} \
-          libpulse-dev${{ matrix.platform.target_apt_arch }} \
-          libwayland-client++0$ \
-          libwayland-cursor++0$ \
-          wayland-scanner++ \
-          gcc-multilib \
-          g++-multilib
+          libpulse-dev${{ matrix.platform.target_apt_arch }}
     - uses: actions/checkout@v2
       with:
         repository: libsdl-org/SDL
