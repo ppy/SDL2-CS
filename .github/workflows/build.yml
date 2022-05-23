@@ -27,8 +27,17 @@ jobs:
     - name: Setup Linux dependencies
       if: runner.os == 'Linux'
       run: |
-        [[ ${{ matrix.platform.target_apt_arch }} == :i386 ]] && sudo dpkg --add-architecture i386
+        if [[ ${{ matrix.platform.target_apt_arch }} == :i386 ]]; then
+          sudo dpkg --add-architecture i386
+        fi
+
         sudo apt-get update -y -qq
+
+        if [[ ${{ matrix.platform.target_apt_arch }} == :i386 ]]; then
+          # Workaround GitHub's ubuntu-20.04 image issue <https://github.com/actions/virtual-environments/issues/4589>
+          sudo apt-get install -y --allow-downgrades libpcre2-8-0=10.34-7
+        fi
+
         sudo apt-get install -y \
           gcc-multilib \
           g++-multilib \
