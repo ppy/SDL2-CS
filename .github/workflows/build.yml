@@ -104,7 +104,7 @@ jobs:
       run: cp install_output/lib/libSDL2-2.0.dylib SDL2-CS/native/${{ matrix.platform.name }}/libSDL2.dylib
       if: runner.os == 'macOS'
     - name: Create pull request
-      uses: peter-evans/create-pull-request@v2
+      uses: peter-evans/create-pull-request@v4
       with:
         commit-message: Update ${{ matrix.platform.name }} SDL binaries
         title: Update ${{ matrix.platform.name }} SDL binaries
