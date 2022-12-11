@@ -75,6 +75,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         repository: libsdl-org/SDL
+        path: SDL2
     - uses: actions/checkout@v2
       with:
         path: 'SDL2-CS'
