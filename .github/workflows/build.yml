@@ -72,11 +72,11 @@ jobs:
           libdrm-dev${{ matrix.platform.target_apt_arch }} \
           libgbm-dev${{ matrix.platform.target_apt_arch }} \
           libpulse-dev${{ matrix.platform.target_apt_arch }}
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
-        repository: libsdl-org/SDL
-        path: SDL2
-    - uses: actions/checkout@v2
+        repository: 'libsdl-org/SDL'
+        ref: 'SDL2'
+    - uses: actions/checkout@v3
       with:
         path: 'SDL2-CS'
     - name: Configure CMake
