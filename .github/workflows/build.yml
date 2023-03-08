@@ -101,7 +101,7 @@ jobs:
     - name: Prepare release (Linux)
       run: cp install_output/lib/libSDL2-2.0.so.0 SDL2-CS/native/${{ matrix.platform.name }}/libSDL2.so
       if: runner.os == 'Linux'
-    - name: Prepare release (OSX)
+    - name: Prepare release (macOS)
       run: cp install_output/lib/libSDL2-2.0.dylib SDL2-CS/native/${{ matrix.platform.name }}/libSDL2.dylib
       if: runner.os == 'macOS'
     - name: Create pull request
@@ -111,6 +111,41 @@ jobs:
         title: Update ${{ matrix.platform.name }} SDL binaries
         body: This PR has been auto-generated to update the ${{ matrix.platform.name }} SDL binaries.
         branch: update-${{ matrix.platform.name }}-binaries
+        path: 'SDL2-CS'
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+
+  build-ios:
+    name: ios
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        repository: 'libsdl-org/SDL'
+        ref: 'SDL2'
+    - uses: actions/checkout@v3
+      with:
+        path: 'SDL2-CS'
+    - name: Build (iOS)
+      run: xcodebuild -project Xcode/SDL/SDL.xcodeproj -scheme xcFramework-iOS -configuration Release
+    - name: Prepare release directory (iOS)
+      run: mkdir -p SDL2-CS/native/ios
+    - name: Prepare release (iOS)
+      run: |
+        mkdir -p SDL2-CS/native/ios/SDL2.xcframework/ios-arm64/SDL2.framework;
+        mkdir -p SDL2-CS/native/ios/SDL2.xcframework/ios-arm64_x86_64-simulator/SDL2.framework;
+        cp Xcode/SDL/Products/SDL2.xcframework/Info.plist                                           SDL2-CS/native/ios/SDL2.xcframework/Info.plist;
+        cp Xcode/SDL/Products/SDL2.xcframework/ios-arm64/SDL2.framework/SDL2                        SDL2-CS/native/ios/SDL2.xcframework/ios-arm64/SDL2.framework/SDL2;
+        cp Xcode/SDL/Products/SDL2.xcframework/ios-arm64/SDL2.framework/Info.plist                  SDL2-CS/native/ios/SDL2.xcframework/ios-arm64/SDL2.framework/Info.plist;
+        cp Xcode/SDL/Products/SDL2.xcframework/ios-arm64_x86_64-simulator/SDL2.framework/SDL2       SDL2-CS/native/ios/SDL2.xcframework/ios-arm64_x86_64-simulator/SDL2.framework/SDL2;
+        cp Xcode/SDL/Products/SDL2.xcframework/ios-arm64_x86_64-simulator/SDL2.framework/Info.plist SDL2-CS/native/ios/SDL2.xcframework/ios-arm64_x86_64-simulator/SDL2.framework/Info.plist;
+    - name: Create pull request
+      uses: peter-evans/create-pull-request@v4
+      with:
+        commit-message: Update iOS SDL binaries
+        title: Update iOS SDL binaries
+        body: This PR has been auto-genereated to update the iOS SDL binaries
+        branch: update-ios-binaries
         path: 'SDL2-CS'
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
