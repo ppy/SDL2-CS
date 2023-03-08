@@ -132,7 +132,6 @@ jobs:
       run: mkdir -p SDL2-CS/native/ios
     - name: Prepare release (iOS)
       run: |
-        mkdir -p SDL2-CS/native/ios/SDL2.xcframework;
         mkdir -p SDL2-CS/native/ios/SDL2.xcframework/ios-arm64/SDL2.framework;
         mkdir -p SDL2-CS/native/ios/SDL2.xcframework/ios-arm64_x86_64-simulator/SDL2.framework;
         cp Xcode/SDL/Products/SDL2.xcframework/Info.plist                                           SDL2-CS/native/ios/SDL2.xcframework/Info.plist;
