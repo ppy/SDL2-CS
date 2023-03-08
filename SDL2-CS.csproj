@@ -52,6 +52,11 @@
             <PackagePath>runtimes/linux-x86/native</PackagePath>
             <Pack>true</Pack>
         </Content>
+        <Content Include="$(MSBuildThisFileDirectory)native\ios\**\*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackagePath>runtimes/ios/native</PackagePath>
+            <Pack>true</Pack>
+        </Content>
     </ItemGroup>
     <ItemGroup>
         <Content Include="app.config">
