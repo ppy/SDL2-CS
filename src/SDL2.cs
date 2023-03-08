@@ -37,6 +37,12 @@ namespace SDL2
 {
 	public static class SDL
 	{
+		static SDL()
+		{
+			if (OperatingSystem.IsIOS())
+				NativeLibrary.SetDllImportResolver(typeof(SDL).Assembly, (_, assembly, path) => NativeLibrary.Load("@rpath/SDL2.framework/SDL2", assembly, path));
+		}
+
 		#region SDL2# Variables
 
 		private const string nativeLibName = "SDL2";
