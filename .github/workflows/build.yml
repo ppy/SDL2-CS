@@ -72,6 +72,14 @@ jobs:
           libdrm-dev${{ matrix.platform.target_apt_arch }} \
           libgbm-dev${{ matrix.platform.target_apt_arch }} \
           libpulse-dev${{ matrix.platform.target_apt_arch }}
+    - name: Build libdecor
+      if: runner.os == 'Linux'
+      run: |
+        git clone https://gitlab.freedesktop.org/libdecor/libdecor.git
+        cd libdecor
+        git checkout 0.1.1
+        meson build -Ddemo=false
+        meson install -C build
     - uses: actions/checkout@v3
       with:
         repository: 'libsdl-org/SDL'
