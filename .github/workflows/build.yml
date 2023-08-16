@@ -46,7 +46,7 @@ jobs:
           wayland-scanner++ \
           wayland-protocols \
           meson \
-          libpangocairo \
+          libpangocairo-1.0-0 \
           pkg-config${{ matrix.platform.target_apt_arch }} \
           libasound2-dev${{ matrix.platform.target_apt_arch }} \
           libdbus-1-dev${{ matrix.platform.target_apt_arch }} \
