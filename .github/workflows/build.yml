@@ -45,6 +45,7 @@ jobs:
           ninja-build \
           wayland-scanner++ \
           wayland-protocols \
+          meson \
           pkg-config${{ matrix.platform.target_apt_arch }} \
           libasound2-dev${{ matrix.platform.target_apt_arch }} \
           libdbus-1-dev${{ matrix.platform.target_apt_arch }} \
