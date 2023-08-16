@@ -109,7 +109,9 @@ jobs:
       run: cp install_output/bin/SDL2.dll SDL2-CS/native/${{ matrix.platform.name }}/SDL2.dll
       if: runner.os == 'Windows'
     - name: Prepare release (Linux)
-      run: cp install_output/lib/libSDL2-2.0.so.0 SDL2-CS/native/${{ matrix.platform.name }}/libSDL2.so
+      run: |
+        cp install_output/lib/libSDL2-2.0.so.0 SDL2-CS/native/${{ matrix.platform.name }}/libSDL2.so
+        cp install_output/lib/libdecor-0.so.0.100.1 SDL2-CS/native/${{ matrix.platform.name }}/libdecor-0.so
       if: runner.os == 'Linux'
     - name: Prepare release (macOS)
       run: cp install_output/lib/libSDL2-2.0.dylib SDL2-CS/native/${{ matrix.platform.name }}/libSDL2.dylib
