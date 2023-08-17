@@ -77,11 +77,14 @@ jobs:
     - name: Build libdecor
       if: runner.os == 'Linux'
       run: |
+        pwd
         git clone https://gitlab.freedesktop.org/libdecor/libdecor.git
         cd libdecor
         git checkout 0.1.1
-        meson build -Ddemo=false
+        meson build -Ddemo=false -Dprefix=/usr
         sudo meson install -C build
+        meson build-workflow -Ddemo=false -Dprefix=install_output
+        meson install -C build-workflow
     - uses: actions/checkout@v3
       with:
         repository: 'libsdl-org/SDL'
