@@ -77,7 +77,6 @@ jobs:
     - name: Build libdecor
       if: runner.os == 'Linux'
       run: |
-        pwd
         git clone https://gitlab.freedesktop.org/libdecor/libdecor.git
         cd libdecor
         git checkout 0.1.1
