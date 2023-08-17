@@ -83,7 +83,7 @@ jobs:
         git checkout 0.1.1
         meson build -Ddemo=false -Dprefix=/usr
         sudo meson install -C build
-        meson build-workflow -Ddemo=false -Dprefix=install_output
+        meson build-workflow -Ddemo=false -Dprefix=$HOME/install_output
         meson install -C build-workflow
     - uses: actions/checkout@v3
       with:
