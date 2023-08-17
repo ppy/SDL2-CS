@@ -83,8 +83,6 @@ jobs:
         git checkout 0.1.1
         meson build -Ddemo=false -Dprefix=/usr
         sudo meson install -C build
-        meson build-workflow -Ddemo=false -Dprefix=$HOME/install_output
-        meson install -C build-workflow
     - uses: actions/checkout@v3
       with:
         repository: 'libsdl-org/SDL'
@@ -114,7 +112,7 @@ jobs:
     - name: Prepare release (Linux)
       run: |
         cp install_output/lib/libSDL2-2.0.so.0 SDL2-CS/native/${{ matrix.platform.name }}/libSDL2.so
-        cp install_output/lib/libdecor-0.so.0.100.1 SDL2-CS/native/${{ matrix.platform.name }}/libdecor-0.so
+        cp /usr/lib/x86_64-linux-gnu/libdecor-0.so.0.100.1 SDL2-CS/native/${{ matrix.platform.name }}/libdecor-0.so
       if: runner.os == 'Linux'
     - name: Prepare release (macOS)
       run: cp install_output/lib/libSDL2-2.0.dylib SDL2-CS/native/${{ matrix.platform.name }}/libSDL2.dylib
