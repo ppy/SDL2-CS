@@ -8,6 +8,8 @@
         <Description>libSDL2 bindings for C#</Description>
         <RootNamespace>SDL2</RootNamespace>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <IsTrimmable>true</IsTrimmable>
+        <EnableAOTAnalyzer>true</EnableAOTAnalyzer>
     </PropertyGroup>
     <PropertyGroup Label="NuGet">
         <Authors>ppy Pty Ltd &amp; flibitijibibo</Authors>
