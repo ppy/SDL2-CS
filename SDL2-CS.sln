@@ -1,16 +1,20 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDL2-CS", "SDL2-CS.csproj", "{85480198-8711-4355-830E-72FD794AD3F6}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDL2-CS", "SDL2-CS\SDL2-CS.csproj", "{85480198-8711-4355-830E-72FD794AD3F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDL2-CS-Android", "SDL2-CS-Android\SDL2-CS-Android.csproj", "{6BE7F3A8-AE6E-440F-AA2E-3A0553514B53}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x86 = Debug|x86
-		Release|x86 = Release|x86
 		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
 		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{85480198-8711-4355-830E-72FD794AD3F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -25,8 +29,26 @@ Global
 		{85480198-8711-4355-830E-72FD794AD3F6}.Release|x64.Build.0 = Release|x64
 		{85480198-8711-4355-830E-72FD794AD3F6}.Release|x86.ActiveCfg = Release|x86
 		{85480198-8711-4355-830E-72FD794AD3F6}.Release|x86.Build.0 = Release|x86
+		{6BE7F3A8-AE6E-440F-AA2E-3A0553514B53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BE7F3A8-AE6E-440F-AA2E-3A0553514B53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BE7F3A8-AE6E-440F-AA2E-3A0553514B53}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6BE7F3A8-AE6E-440F-AA2E-3A0553514B53}.Debug|x64.Build.0 = Debug|Any CPU
+		{6BE7F3A8-AE6E-440F-AA2E-3A0553514B53}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6BE7F3A8-AE6E-440F-AA2E-3A0553514B53}.Debug|x86.Build.0 = Debug|Any CPU
+		{6BE7F3A8-AE6E-440F-AA2E-3A0553514B53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BE7F3A8-AE6E-440F-AA2E-3A0553514B53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BE7F3A8-AE6E-440F-AA2E-3A0553514B53}.Release|x64.ActiveCfg = Release|Any CPU
+		{6BE7F3A8-AE6E-440F-AA2E-3A0553514B53}.Release|x64.Build.0 = Release|Any CPU
+		{6BE7F3A8-AE6E-440F-AA2E-3A0553514B53}.Release|x86.ActiveCfg = Release|Any CPU
+		{6BE7F3A8-AE6E-440F-AA2E-3A0553514B53}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {932A6C22-368C-451B-946B-3FE2930A531A}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = SDL2-CS.csproj
+		StartupItem = SDL2-CS\SDL2-CS.csproj
 	EndGlobalSection
 EndGlobal
