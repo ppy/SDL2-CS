@@ -12,10 +12,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedNativeLibrary Include="native\armeabi-v7a\libSDL2.so" />
-		<EmbeddedNativeLibrary Include="native\armeabi-v7a\libSDL2AndroidMainSetter.so" />
 		<EmbeddedNativeLibrary Include="native\arm64-v8a\libSDL2.so" />
-		<EmbeddedNativeLibrary Include="native\arm64-v8a\libSDL2AndroidMainSetter.so" />
 		<EmbeddedNativeLibrary Include="native\x86\libSDL2.so" />
-		<EmbeddedNativeLibrary Include="native\x86\libSDL2AndroidMainSetter.so" />
 	</ItemGroup>
 </Project>

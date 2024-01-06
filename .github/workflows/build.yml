@@ -160,7 +160,13 @@ jobs:
     - uses: actions/checkout@v3
       with:
         repository: 'libsdl-org/SDL'
-        ref: 'SDL2'
+        fetch-depth: 0 # Brings all commits/branches
+    - name: Checkout SDL2
+      run: |
+        git checkout SDL2
+        
+        # Add createSDLMainRunnable() to SDLActivity
+        git -c user.email="temp@temp.mail" -c user.name="temp" cherry-pick 3a482ebae062cbc127e4e0faf9a07f69b54b7419
     - uses: actions/checkout@v3
       with:
         path: 'SDL2-CS'
@@ -179,23 +185,15 @@ jobs:
       run: |
         sdkmanager --install "platform-tools" "platforms;$PLATFORM_VER"
         sdkmanager --install "ndk;$NDK_VER" --channel=3
-    - name: Build Native Libraries (Android)
+    - name: Build (Android)
       run: |
         export PATH=$ANDROID_HOME/ndk/$NDK_VER:$PATH
         export OUTPUT=$PWD/install_output
         mkdir -p $OUTPUT
-
-        # Build main setter
-        pushd SDL2-CS/SDL2-CS-Android/SDL2AndroidMainSetter
-        mkdir build
-        ndk-build NDK_PROJECT_PATH=null NDK_OUT=build NDK_LIBS_OUT=$OUTPUT APP_BUILD_SCRIPT=Android.mk NDK_APPLICATION_MK=Application.mk
-        rm -rf build # Clean up as it generates intermediate binaries in PR
-        popd
         
         # Build SDL2
         sed -i 's/ x86_64//g' ./build-scripts/androidbuildlibs.sh
-        ./build-scripts/androidbuildlibs.sh -j 4
-        cp -rv build/android/lib/* $OUTPUT
+        ./build-scripts/androidbuildlibs.sh -j 4 NDK_LIBS_OUT=$OUTPUT
     - name: Build SDL2 Android Java
       run: |
         export JAVA_HOME=$JAVA_HOME_11_X64
