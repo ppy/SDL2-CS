@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net6.0-android</TargetFramework>
+		<TargetFramework>net8.0-android</TargetFramework>
 		<SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
 		<RootNamespace>SDL2_CS_Android</RootNamespace>
 		<OutputType>Library</OutputType>
