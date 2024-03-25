@@ -72,11 +72,11 @@ jobs:
           libdrm-dev${{ matrix.platform.target_apt_arch }} \
           libgbm-dev${{ matrix.platform.target_apt_arch }} \
           libpulse-dev${{ matrix.platform.target_apt_arch }}
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         repository: 'libsdl-org/SDL'
         ref: 'SDL2'
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         path: 'SDL2-CS'
     - name: Configure CMake
@@ -105,7 +105,7 @@ jobs:
       run: cp install_output/lib/libSDL2-2.0.dylib SDL2-CS/native/${{ matrix.platform.name }}/libSDL2.dylib
       if: runner.os == 'macOS'
     - name: Create pull request
-      uses: peter-evans/create-pull-request@v4
+      uses: peter-evans/create-pull-request@v6
       with:
         commit-message: Update ${{ matrix.platform.name }} SDL binaries
         title: Update ${{ matrix.platform.name }} SDL binaries
@@ -119,11 +119,11 @@ jobs:
     name: ios
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         repository: 'libsdl-org/SDL'
         ref: 'SDL2'
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         path: 'SDL2-CS'
     - name: Build (iOS)
@@ -140,7 +140,7 @@ jobs:
         cp Xcode/SDL/Products/SDL2.xcframework/ios-arm64_x86_64-simulator/SDL2.framework/SDL2       SDL2-CS/native/ios/SDL2.xcframework/ios-arm64_x86_64-simulator/SDL2.framework/SDL2;
         cp Xcode/SDL/Products/SDL2.xcframework/ios-arm64_x86_64-simulator/SDL2.framework/Info.plist SDL2-CS/native/ios/SDL2.xcframework/ios-arm64_x86_64-simulator/SDL2.framework/Info.plist;
     - name: Create pull request
-      uses: peter-evans/create-pull-request@v4
+      uses: peter-evans/create-pull-request@v6
       with:
         commit-message: Update iOS SDL binaries
         title: Update iOS SDL binaries
