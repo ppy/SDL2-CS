@@ -116,6 +116,10 @@ jobs:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
 
   build-ios:
+    # SDL2 includes the CoreBluetooth framework which is undesired for osu!,
+    # Disabling it seems possible via defining SDL_HIDAPI_DISABLED somewhere in SDL_config_iphoneos.h,
+    # but it doesn't work for some reason. Stop distributing iOS frameworks altogether to avoid that for now.
+    if: false
     name: ios
     runs-on: macos-latest
     steps:
