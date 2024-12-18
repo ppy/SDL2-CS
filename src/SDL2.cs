@@ -40,10 +40,11 @@ namespace SDL2
 {
 	public static class SDL
 	{
-		public static void PrepareLibraryForIOS()
-		{
-			NativeLibrary.SetDllImportResolver(typeof(SDL).Assembly, (_, assembly, path) => NativeLibrary.Load("@rpath/SDL2.framework/SDL2", assembly, path));
-		}
+		// Disable iOS to avoid CoreBluetooth framework getting referenced in game applications.
+		// public static void PrepareLibraryForIOS()
+		// {
+		//	NativeLibrary.SetDllImportResolver(typeof(SDL).Assembly, (_, assembly, path) => NativeLibrary.Load("@rpath/SDL2.framework/SDL2", assembly, path));
+		//}
 
 		#region SDL2# Variables
 
